@@ -1,1 +1,2 @@
 Pillow==2.7.0
+python-gnupg==0.3.7
