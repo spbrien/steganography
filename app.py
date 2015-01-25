@@ -29,6 +29,12 @@ def main():
 			cloak = Image.new(im.mode, im.size)
 			cloak.putdata(data)
 			cloak.save('cloak.png', 'PNG')
+		elif args.c and not args.m:
+			print "Please provide a message to hide... \n"
+			parser.print_help()
+		elif args.m and not args.c:
+			print "Please provide an image to conceal your message... \n"
+			parser.print_help()
 		else: 
 			parser.print_help()
 	elif args.r:
