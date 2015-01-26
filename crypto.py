@@ -4,7 +4,7 @@ from os.path import expanduser
 import getpass
 
 home = expanduser("~")
-gpghome = os.path.join(home, 'gpghome')
+gpghome = os.path.join(home, '.gpgpython')
 
 def gpg_initialize():
 
@@ -23,26 +23,24 @@ def gpg_initialize():
 	key = gpg.gen_key(input_data)
 	return key
 
-def gpg_export_keys(key):
+def gpg_export_public_keys(key, keyfile):
 
 	gpg = gnupg.GPG(gnupghome=gpghome)
 
 	ascii_armored_public_keys = gpg.export_keys(key)
-	ascii_armored_private_keys = gpg.export_keys(key, True)
 	
-	with open('keyfile.asc', 'w') as f:
+	with open(keyfile, 'w') as f:
 		f.write(ascii_armored_public_keys)
-		f.write(ascii_armored_private_keys)
 
-def gpg_import_keys():
+def gpg_import_keys(keyfile):
 	gpg = gnupg.GPG(gnupghome=gpghome)
-	key_data = open('keyfile.asc').read()
+	key_data = open(keyfile).read()
 	import_result = gpg.import_keys(key_data)
 
 def gpg_encrypt_string(unencrypted_string):
 	gpg = gnupg.GPG(gnupghome=gpghome)
 	
-	email = raw_input('Email: ')
+	email = raw_input('Recipient Email: ')
 	encrypted_data = gpg.encrypt(unencrypted_string, email)
 	encrypted_string = str(encrypted_data)
 	print 'ok: ', encrypted_data.ok

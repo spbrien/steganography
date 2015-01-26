@@ -23,6 +23,9 @@ def main():
 			im = Image.open(args.c)
 			im.convert('RGB')
 			data = get_image_data(im)
+			if ((len(data) / 8) - 1) < msg_length:
+				print "There is not enough room for your message. Use a larger photo or a smaller message."
+			
 			data = write_msg_length(data, msg_length_binary)
 			data = write_msg(data, binary, msg_length)
 
